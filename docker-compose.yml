@@ -1,0 +1,21 @@
+name: platfrom-app
+services:
+  infrastructure:
+    image: alpine
+    command: "echo -c infrastructure started"
+    depends_on:
+      - mssql
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA = Y
+      - MSSQL_SA_PASSWORD = "password@123"
+    ports:
+      - 1433:1433
+    volumes:
+      - mssqlVolume:/var/opt/mssql
+volumes:
+  mssqlVolume:
+networks:
+  default:
+    name: platfrom-network
